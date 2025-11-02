@@ -172,6 +172,10 @@ jobs:
         echo "Building package with version: $VERSION"
         ./build-package.sh "$VERSION"
 
+        # Rename package with version number
+        cd ../..
+        mv packages/gia-*.pkg packages/gia-intel-installer-v${VERSION}.pkg
+
     - name: Upload macOS Intel Package
       uses: actions/upload-artifact@v4
       with:
@@ -266,6 +270,10 @@ jobs:
         VERSION="0.1.$COMMIT_COUNT"
         echo "Building package with version: $VERSION"
         ./build-package.sh "$VERSION"
+
+        # Rename package with version number
+        cd ../..
+        mv packages/gia-*.pkg packages/gia-arm-installer-v${VERSION}.pkg
 
     - name: Upload macOS ARM Package
       uses: actions/upload-artifact@v4
@@ -373,9 +381,9 @@ jobs:
         cp ./artifacts/macos-arm/gia ./gia-macos-aarch64
         cp ./artifacts/macos-arm/giagui ./giagui-macos-aarch64
 
-        # Copy macOS packages (keep original names with version)
-        cp ./artifacts/macos-intel-pkg/*.pkg ./gia-intel-installer.pkg
-        cp ./artifacts/macos-arm-pkg/*.pkg ./gia-arm-installer.pkg
+        # Copy macOS packages (preserve version in filename)
+        cp ./artifacts/macos-intel-pkg/*.pkg ./
+        cp ./artifacts/macos-arm-pkg/*.pkg ./
 
         # Copy tar.gz archives (preserve version in filename)
         cp ./artifacts/macos-intel-tarball/*.tar.gz ./
@@ -389,7 +397,7 @@ jobs:
           ./giagui-macos-x86_64 \
           ./gia-macos-aarch64 \
           ./giagui-macos-aarch64 \
-          ./gia-intel-installer.pkg \
-          ./gia-arm-installer.pkg \
+          ./gia-intel-installer-*.pkg \
+          ./gia-arm-installer-*.pkg \
           ./gia-macos-x86_64-*.tar.gz \
           ./gia-macos-aarch64-*.tar.gz
