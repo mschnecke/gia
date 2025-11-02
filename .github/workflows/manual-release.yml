@@ -368,10 +368,11 @@ jobs:
         echo "Final release notes:"
         cat release_notes.txt
 
-        # Create release
+        # Create release (explicitly publish to trigger downstream workflows)
         gh release create "${{ needs.detect-version.outputs.version }}" \
           --title "Release ${{ needs.detect-version.outputs.version }}" \
-          --notes-file "release_notes.txt"
+          --notes-file "release_notes.txt" \
+          --draft=false
 
         # Rename binaries with platform-specific names
         cp ./artifacts/windows/gia.exe ./gia-windows-x86_64.exe
