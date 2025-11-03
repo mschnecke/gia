@@ -407,11 +407,14 @@ jobs:
     - name: Trigger tap repository update
       env:
         VERSION: ${{ needs.detect-version.outputs.version }}
-        GH_TOKEN: ${{ secrets.GH_PERSONAL_TOKEN }}
       run: |
         # Strip 'v' prefix from version tag for Homebrew formula
         VERSION_NUM="${VERSION#v}"
         echo "Triggering Homebrew tap update with version: $VERSION_NUM"
+
+        # Clean the token (remove any whitespace/newlines)
+        GH_TOKEN=$(echo "${{ secrets.GH_PERSONAL_TOKEN }}" | tr -d '[:space:]')
+        export GH_TOKEN
 
         # Use gh CLI for workflow dispatch (more reliable than raw curl)
         gh workflow run update-formula.yml \
