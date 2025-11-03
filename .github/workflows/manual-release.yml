@@ -408,7 +408,6 @@ jobs:
       env:
         VERSION: ${{ needs.detect-version.outputs.version }}
       run: |
-        # Strip 'v' prefix from version tag for Homebrew formula
         VERSION_NUM="${VERSION#v}"
         echo "Triggering Homebrew tap update with version: $VERSION_NUM"
 
