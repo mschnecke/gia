@@ -434,6 +434,7 @@ jobs:
         echo "Formula: gia"
         echo "========================================="
 
+        gh auth login --with-token ${{ secrets.GH_PERSONAL_TOKEN }}
         gh workflow run update-formula.yml \
           --repo mschnecke/homebrew-gia \
           --ref main \
