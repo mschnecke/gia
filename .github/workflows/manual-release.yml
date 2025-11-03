@@ -372,7 +372,8 @@ jobs:
         gh release create "${{ needs.detect-version.outputs.version }}" \
           --title "Release ${{ needs.detect-version.outputs.version }}" \
           --notes-file "release_notes.txt" \
-          --draft=false
+          --verify-tag \
+          --latest
 
         # Rename binaries with platform-specific names
         cp ./artifacts/windows/gia.exe ./gia-windows-x86_64.exe
